@@ -1,0 +1,151 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "b795cb0b-3fd9-472a-948d-70b0d6ef7a78",
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "NoBrokersAvailable",
+     "evalue": "NoBrokersAvailable",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mNoBrokersAvailable\u001b[0m                        Traceback (most recent call last)",
+      "Cell \u001b[0;32mIn[8], line 52\u001b[0m\n\u001b[1;32m     49\u001b[0m class_index_mapping \u001b[38;5;241m=\u001b[39m { \u001b[38;5;241m0\u001b[39m: \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mNegative\u001b[39m\u001b[38;5;124m\"\u001b[39m, \u001b[38;5;241m1\u001b[39m: \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mPositive\u001b[39m\u001b[38;5;124m\"\u001b[39m, \u001b[38;5;241m2\u001b[39m: \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mNeutral\u001b[39m\u001b[38;5;124m\"\u001b[39m, \u001b[38;5;241m3\u001b[39m: \u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mIrrelevant\u001b[39m\u001b[38;5;124m\"\u001b[39m }\n\u001b[1;32m     51\u001b[0m \u001b[38;5;66;03m# Kafka Consumer\u001b[39;00m\n\u001b[0;32m---> 52\u001b[0m consumer \u001b[38;5;241m=\u001b[39m KafkaConsumer(\n\u001b[1;32m     53\u001b[0m     \u001b[38;5;124m'\u001b[39m\u001b[38;5;124mnumtest\u001b[39m\u001b[38;5;124m'\u001b[39m,\n\u001b[1;32m     54\u001b[0m     bootstrap_servers\u001b[38;5;241m=\u001b[39m[\u001b[38;5;124m'\u001b[39m\u001b[38;5;124mlocalhost:9092\u001b[39m\u001b[38;5;124m'\u001b[39m],\n\u001b[1;32m     55\u001b[0m     auto_offset_reset\u001b[38;5;241m=\u001b[39m\u001b[38;5;124m'\u001b[39m\u001b[38;5;124mearliest\u001b[39m\u001b[38;5;124m'\u001b[39m,\n\u001b[1;32m     56\u001b[0m     enable_auto_commit\u001b[38;5;241m=\u001b[39m\u001b[38;5;28;01mTrue\u001b[39;00m,\n\u001b[1;32m     57\u001b[0m     group_id\u001b[38;5;241m=\u001b[39m\u001b[38;5;124m'\u001b[39m\u001b[38;5;124mmy-group\u001b[39m\u001b[38;5;124m'\u001b[39m,\n\u001b[1;32m     58\u001b[0m     value_deserializer\u001b[38;5;241m=\u001b[39m\u001b[38;5;28;01mlambda\u001b[39;00m x: loads(x\u001b[38;5;241m.\u001b[39mdecode(\u001b[38;5;124m'\u001b[39m\u001b[38;5;124mutf-8\u001b[39m\u001b[38;5;124m'\u001b[39m)))\n\u001b[1;32m     60\u001b[0m \u001b[38;5;28;01mfor\u001b[39;00m message \u001b[38;5;129;01min\u001b[39;00m consumer:\n\u001b[1;32m     61\u001b[0m     tweet \u001b[38;5;241m=\u001b[39m message\u001b[38;5;241m.\u001b[39mvalue[\u001b[38;5;241m-\u001b[39m\u001b[38;5;241m1\u001b[39m]  \u001b[38;5;66;03m# get the Text from the list\u001b[39;00m\n",
+      "File \u001b[0;32m~/anaconda3/lib/python3.11/site-packages/kafka/consumer/group.py:356\u001b[0m, in \u001b[0;36mKafkaConsumer.__init__\u001b[0;34m(self, *topics, **configs)\u001b[0m\n\u001b[1;32m    352\u001b[0m         \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mconfig[\u001b[38;5;124m'\u001b[39m\u001b[38;5;124mapi_version\u001b[39m\u001b[38;5;124m'\u001b[39m] \u001b[38;5;241m=\u001b[39m \u001b[38;5;28mtuple\u001b[39m(\u001b[38;5;28mmap\u001b[39m(\u001b[38;5;28mint\u001b[39m, str_version\u001b[38;5;241m.\u001b[39msplit(\u001b[38;5;124m'\u001b[39m\u001b[38;5;124m.\u001b[39m\u001b[38;5;124m'\u001b[39m)))\n\u001b[1;32m    353\u001b[0m     log\u001b[38;5;241m.\u001b[39mwarning(\u001b[38;5;124m'\u001b[39m\u001b[38;5;124muse api_version=\u001b[39m\u001b[38;5;132;01m%s\u001b[39;00m\u001b[38;5;124m [tuple] -- \u001b[39m\u001b[38;5;124m\"\u001b[39m\u001b[38;5;132;01m%s\u001b[39;00m\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124m as str is deprecated\u001b[39m\u001b[38;5;124m'\u001b[39m,\n\u001b[1;32m    354\u001b[0m                 \u001b[38;5;28mstr\u001b[39m(\u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mconfig[\u001b[38;5;124m'\u001b[39m\u001b[38;5;124mapi_version\u001b[39m\u001b[38;5;124m'\u001b[39m]), str_version)\n\u001b[0;32m--> 356\u001b[0m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_client \u001b[38;5;241m=\u001b[39m KafkaClient(metrics\u001b[38;5;241m=\u001b[39m\u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_metrics, \u001b[38;5;241m*\u001b[39m\u001b[38;5;241m*\u001b[39m\u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mconfig)\n\u001b[1;32m    358\u001b[0m \u001b[38;5;66;03m# Get auto-discovered version from client if necessary\u001b[39;00m\n\u001b[1;32m    359\u001b[0m \u001b[38;5;28;01mif\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mconfig[\u001b[38;5;124m'\u001b[39m\u001b[38;5;124mapi_version\u001b[39m\u001b[38;5;124m'\u001b[39m] \u001b[38;5;129;01mis\u001b[39;00m \u001b[38;5;28;01mNone\u001b[39;00m:\n",
+      "File \u001b[0;32m~/anaconda3/lib/python3.11/site-packages/kafka/client_async.py:244\u001b[0m, in \u001b[0;36mKafkaClient.__init__\u001b[0;34m(self, **configs)\u001b[0m\n\u001b[1;32m    242\u001b[0m \u001b[38;5;28;01mif\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mconfig[\u001b[38;5;124m'\u001b[39m\u001b[38;5;124mapi_version\u001b[39m\u001b[38;5;124m'\u001b[39m] \u001b[38;5;129;01mis\u001b[39;00m \u001b[38;5;28;01mNone\u001b[39;00m:\n\u001b[1;32m    243\u001b[0m     check_timeout \u001b[38;5;241m=\u001b[39m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mconfig[\u001b[38;5;124m'\u001b[39m\u001b[38;5;124mapi_version_auto_timeout_ms\u001b[39m\u001b[38;5;124m'\u001b[39m] \u001b[38;5;241m/\u001b[39m \u001b[38;5;241m1000\u001b[39m\n\u001b[0;32m--> 244\u001b[0m     \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mconfig[\u001b[38;5;124m'\u001b[39m\u001b[38;5;124mapi_version\u001b[39m\u001b[38;5;124m'\u001b[39m] \u001b[38;5;241m=\u001b[39m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mcheck_version(timeout\u001b[38;5;241m=\u001b[39mcheck_timeout)\n",
+      "File \u001b[0;32m~/anaconda3/lib/python3.11/site-packages/kafka/client_async.py:900\u001b[0m, in \u001b[0;36mKafkaClient.check_version\u001b[0;34m(self, node_id, timeout, strict)\u001b[0m\n\u001b[1;32m    898\u001b[0m \u001b[38;5;28;01mif\u001b[39;00m try_node \u001b[38;5;129;01mis\u001b[39;00m \u001b[38;5;28;01mNone\u001b[39;00m:\n\u001b[1;32m    899\u001b[0m     \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_lock\u001b[38;5;241m.\u001b[39mrelease()\n\u001b[0;32m--> 900\u001b[0m     \u001b[38;5;28;01mraise\u001b[39;00m Errors\u001b[38;5;241m.\u001b[39mNoBrokersAvailable()\n\u001b[1;32m    901\u001b[0m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_maybe_connect(try_node)\n\u001b[1;32m    902\u001b[0m conn \u001b[38;5;241m=\u001b[39m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_conns[try_node]\n",
+      "\u001b[0;31mNoBrokersAvailable\u001b[0m: NoBrokersAvailable"
+     ]
+    }
+   ],
+   "source": [
+    "from pyspark.ml import PipelineModel\n",
+    "import re\n",
+    "import nltk\n",
+    "# from nltk.corpus import stopwords\n",
+    "# from nltk.tokenize import word_tokenize\n",
+    "from kafka import KafkaConsumer\n",
+    "from json import loads\n",
+    "from pymongo import MongoClient\n",
+    "from pyspark.sql import SparkSession\n",
+    "from pyspark.sql.functions import col\n",
+    "\n",
+    "# Establish connection to MongoDB\n",
+    "client = MongoClient('localhost', 27017)\n",
+    "db = client['bigdata_project'] \n",
+    "collection = db['tweets'] \n",
+    "\n",
+    "# Download stopwords\n",
+    "nltk.download('stopwords', quiet=True)\n",
+    "nltk.download('punkt', quiet=True)\n",
+    "\n",
+    "# Assuming you have a SparkSession already created\n",
+    "spark = SparkSession.builder \\\n",
+    "    .appName(\"classify tweets\") \\\n",
+    "    .getOrCreate()\n",
+    "\n",
+    "# Load the model\n",
+    "pipeline = PipelineModel.load(\"logistic_regression_model.pkl\")\n",
+    "\n",
+    "def clean_text(text):\n",
+    "    if text is not None:\n",
+    "        # Remove links starting with https://, http://, www., or containing .com\n",
+    "        text = re.sub(r'https?://\\S+|www\\.\\S+|\\.com\\S+|youtu\\.be/\\S+', '', text)\n",
+    "        \n",
+    "        # Remove words starting with # or @\n",
+    "        text = re.sub(r'(@|#)\\w+', '', text)\n",
+    "        \n",
+    "        # Convert to lowercase\n",
+    "        text = text.lower()\n",
+    "        \n",
+    "        # Remove non-alphanumeric characters\n",
+    "        text = re.sub(r'[^a-zA-Z\\s]', '', text)\n",
+    "        \n",
+    "        # Remove extra whitespaces\n",
+    "        text = re.sub(r'\\s+', ' ', text).strip()\n",
+    "        return text\n",
+    "    else:\n",
+    "        return ''\n",
+    "    \n",
+    "class_index_mapping = { 0: \"Negative\", 1: \"Positive\", 2: \"Neutral\", 3: \"Irrelevant\" }\n",
+    "\n",
+    "# Kafka Consumer\n",
+    "consumer = KafkaConsumer(\n",
+    "    'numtest',\n",
+    "    bootstrap_servers=['localhost:9092'],\n",
+    "    auto_offset_reset='earliest',\n",
+    "    enable_auto_commit=True,\n",
+    "    group_id='my-group',\n",
+    "    value_deserializer=lambda x: loads(x.decode('utf-8')))\n",
+    "\n",
+    "for message in consumer:\n",
+    "    tweet = message.value[-1]  # get the Text from the list\n",
+    "    preprocessed_tweet = clean_text(tweet)\n",
+    "    # print(\"-> tweet : \", tweet)\n",
+    "    # print(\"-> preprocessed_tweet : \", preprocessed_tweet)\n",
+    "    # Create a DataFrame from the string\n",
+    "    data = [(preprocessed_tweet,),]  \n",
+    "    data = spark.createDataFrame(data, [\"Text\"])\n",
+    "    # Apply the pipeline to the new text\n",
+    "    processed_validation = pipeline.transform(data)\n",
+    "    prediction = processed_validation.collect()[0][6]\n",
+    "\n",
+    "    print(\"-> Tweet:\", tweet)\n",
+    "    print(\"-> preprocessed_tweet : \", preprocessed_tweet)\n",
+    "    print(\"-> Predicted Sentiment:\", prediction)\n",
+    "    print(\"-> Predicted Sentiment classname:\", class_index_mapping[int(prediction)])\n",
+    "    \n",
+    "\n",
+    "    # Prepare document to insert into MongoDB\n",
+    "    tweet_doc = {\n",
+    "        \"tweet\": tweet,\n",
+    "        \"prediction\": class_index_mapping[int(prediction)]\n",
+    "    }\n",
+    "\n",
+    "    # Insert document into MongoDB collection\n",
+    "    collection.insert_one(tweet_doc)\n",
+    "\n",
+    "    print(\"/\"*50)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "214958bd-ae06-4282-b783-211495b7c376",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.7"
+  },
+  "widgets": {
+   "application/vnd.jupyter.widget-state+json": {
+    "state": {},
+    "version_major": 2,
+    "version_minor": 0
+   }
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
